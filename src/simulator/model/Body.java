@@ -7,10 +7,10 @@ import java.lang.Double;
 
 public class Body {//supongo que en la futura practica pasaremos al Vector3D y habra una clase madre llamada Vector
 	protected String id;
-	protected Vector2D v;
-	protected Vector2D f;
-	protected Vector2D p;
-	protected Double m;
+	protected Vector2D v;	//velocidad
+	protected Vector2D f;	//Fuerza
+	protected Vector2D p;	//posicion
+	protected Double m;		//Masa
 	
 	public Body(Vector2D v,Vector2D f,Vector2D p,Double m) {
 		this.v= v; //velocidad
@@ -31,9 +31,6 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 	public void move(double t) {//t = tiempo
 		
 		//Si, se que se puede modular mas pero eso lo hare cuando haya acabado.
-		
-		
-		
 		
 		Vector2D a; //aceleracion
 		if(m!=0) {
@@ -60,16 +57,21 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 	
 	
 	public JSONObject getState() {
+		JSONObject b= new JSONObject();
 		
-	
+		b.put("id",this.id);
+		b.put("m",this.m);
+		b.put("p",this.p);
+		b.put("v",this.v);
+		b.put("f",this.f);
 		
-		
-		return new JSONObject();
+		return b;
 	}
 	
 	public String toString() {
+		JSONObject json= getState();
 		
-		return this.getState.toString();
+		return  json.toString();
 	}
 	
 	//geters

@@ -6,21 +6,15 @@ import simulator.misc.Vector2D;
 
 class NewtonUniversalGravitation implements ForceLaws {
 	
-	private final double G= 6.67E-11;
+	private final double G;
 	
 	NewtonUniversalGravitation(){
-		
+		this.G= 6.67E-11;
 	}
 	public void apply(List<Body> bs) {
 		Body body;
 		Body aux;
-		Vector2D clear= new Vector2D();
 		Vector2D f;
-		
-		for(int i=0; i< bs.size();i++) {// Ponemos las fuerzas de todos los cuerpos a 0 para simplificar el calculo de sus fuerzas
-			body= bs.get(i);
-			body.getForce().dot(clear);
-		}
 		
 		for(int i=0; i< bs.size();i++) {//introducimos las fuerzas
 			
