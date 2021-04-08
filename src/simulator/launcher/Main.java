@@ -1,5 +1,13 @@
 package simulator.launcher;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -9,16 +17,28 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
 
+import simulator.control.Controller;
 import simulator.control.StateComparator;
+import simulator.factories.BasicBodyBuilder;
+import simulator.factories.Builder;
+import simulator.factories.BuilderBasedFactory;
+import simulator.factories.EpsilonEqualStatesBuilder;
 import simulator.factories.Factory;
+import simulator.factories.MassEqualStatesBuilder;
+import simulator.factories.MassLosingBodyBuilder;
+import simulator.factories.MovingTowardsFixedPointBuilder;
+import simulator.factories.NewtonUniversalGravitationBuilder;
+import simulator.factories.NoForceBuilder;
 import simulator.model.Body;
 import simulator.model.ForceLaws;
+import simulator.model.PhysicsSimulator;
 
 public class Main {
 
 	// default values for some parameters
 	//
 	private final static Double _dtimeDefaultValue = 2500.0;
+	private final static int _stepsDefaultValue = 150;
 	private final static String _forceLawsDefaultValue = "nlug";
 	private final static String _stateComparatorDefaultValue = "epseq";
 
@@ -26,8 +46,11 @@ public class Main {
 	//
 	private static Double _dtime = null;
 	private static String _inFile = null;
+	private static String _outFile = null;
+	private static String _expectedOutFile = null;
 	private static JSONObject _forceLawsInfo = null;
 	private static JSONObject _stateComparatorInfo = null;
+	private static int _steps;
 
 	// factories
 	private static Factory<Body> _bodyFactory;
@@ -35,11 +58,22 @@ public class Main {
 	private static Factory<StateComparator> _stateComparatorFactory;
 
 	private static void init() {
-		// TODO initialize the bodies factory
-
-		// TODO initialize the force laws factory
-
-		// TODO initialize the state comparator
+		
+		ArrayList<Builder<Body>> bodyBuilders = new ArrayList<>();
+		bodyBuilders.add(new BasicBodyBuilder());
+		bodyBuilders.add(new MassLosingBodyBuilder());
+		_bodyFactory = new BuilderBasedFactory<Body>(bodyBuilders);
+		
+		ArrayList<Builder<ForceLaws>> gravityLawsBuilders = new ArrayList<>();
+		gravityLawsBuilders.add(new NewtonUniversalGravitationBuilder());
+		gravityLawsBuilders.add(new MovingTowardsFixedPointBuilder());
+		gravityLawsBuilders.add(new NoForceBuilder());
+		_forceLawsFactory = new BuilderBasedFactory<ForceLaws>(gravityLawsBuilders);
+		
+		ArrayList<Builder<StateComparator>> stateComparatorBuilders = new ArrayList<>();
+		stateComparatorBuilders.add(new EpsilonEqualStatesBuilder());
+		stateComparatorBuilders.add(new MassEqualStatesBuilder());
+		_stateComparatorFactory = new BuilderBasedFactory<StateComparator>(stateComparatorBuilders);
 	}
 
 	private static void parseArgs(String[] args) {
@@ -56,8 +90,9 @@ public class Main {
 
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
-			// TODO add support of -o, -eo, and -s (define corresponding parse methods)
-
+			parseOutputOption(line);
+			parseExpectedOutputOption(line);
+			parseStepsOption(line);
 			parseDeltaTimeOption(line);
 			parseForceLawsOption(line);
 			parseStateComparatorOption(line);
@@ -88,9 +123,18 @@ public class Main {
 
 		// input file
 		cmdLineOptions.addOption(Option.builder("i").longOpt("input").hasArg().desc("Bodies JSON input file.").build());
-
-		// TODO add support for -o, -eo, and -s (add corresponding information to
-		// cmdLineOptions)
+		
+		// output
+		cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg().desc("Output file, where output is written. Default value: the standard output.").build());
+		
+		//expected output
+		cmdLineOptions.addOption(Option.builder("eo").longOpt("expected-output").hasArg().desc("The expected output file. If not provided no comparison is applied").build());
+		
+		//steps
+		cmdLineOptions.addOption(Option.builder("s").longOpt("steps").hasArg()
+				.desc("An integer representing the number ofsimulation steps. Default value: "
+						+ _stepsDefaultValue + ".")
+				.build());
 
 		// delta-time
 		cmdLineOptions.addOption(Option.builder("dt").longOpt("delta-time").hasArg()
@@ -145,6 +189,24 @@ public class Main {
 		if (_inFile == null) {
 			throw new ParseException("In batch mode an input file of bodies is required");
 		}
+	}
+	
+	private static void parseOutputOption(CommandLine line) throws ParseException {
+		_outFile = line.getOptionValue("o");
+	}
+	
+	private static void parseExpectedOutputOption(CommandLine line) throws ParseException {
+		_expectedOutFile = line.getOptionValue("eo");
+	}
+	
+	private static void parseStepsOption(CommandLine line) throws ParseException {
+		String s = line.getOptionValue("s", _dtimeDefaultValue.toString());
+		try {
+			_steps = Integer.parseInt(s);
+		} catch (Exception e) {
+			throw new ParseException("Invalid delta-time value: " + s);
+		}
+		
 	}
 
 	private static void parseDeltaTimeOption(CommandLine line) throws ParseException {
@@ -212,7 +274,26 @@ public class Main {
 	}
 
 	private static void startBatchMode() throws Exception {
-		// TODO complete this method
+		
+		ForceLaws forceLaws = _forceLawsFactory.createInstance(_forceLawsInfo);
+		PhysicsSimulator simulator = new PhysicsSimulator(forceLaws, _dtime);
+		StateComparator cmp = _stateComparatorFactory.createInstance(_stateComparatorInfo);
+		Controller controller = new Controller(simulator, _bodyFactory);
+		
+		try (InputStream is = new FileInputStream(new File(_inFile));) {
+			controller.loadBodies(is);
+		} catch (FileNotFoundException e) {
+			throw new ParseException("Invalid Input File");
+		}
+		
+		OutputStream os = System.out;
+		
+		if(_outFile != null) {
+			os = new FileOutputStream(new File(_outFile));
+		}
+		InputStream eos = new FileInputStream(new File(_expectedOutFile));
+		
+		controller.run(_steps,os,eos,cmp);
 	}
 
 	private static void start(String[] args) throws Exception {

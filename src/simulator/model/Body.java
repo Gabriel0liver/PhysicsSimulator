@@ -12,25 +12,22 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 	protected Vector2D p;	//posicion
 	protected Double m;		//Masa
 	
-	public Body(Vector2D v,Vector2D f,Vector2D p,Double m) {
+	public Body(Vector2D v,Vector2D p,Double m) {
 		this.v= v; //velocidad
-		this.f=f; //fuerza
 		this.p=p; //posicion
 		this.m= m; //masa
-		
+		this.f = new Vector2D(0,0);
 	}
 	
 	public void addForce(Vector2D f) {
-		this.f.plus(f);
+		this.f = this.f.plus(f);
 	}
 	
 	public void resetForce() {
-		this.f.scale(0);
+		this.f = this.f.scale(0);
 	}
 	
 	public void move(double t) {//t = tiempo
-		
-		//Si, se que se puede modular mas pero eso lo hare cuando haya acabado.
 		
 		Vector2D a; //aceleracion
 		if(m!=0) {
@@ -40,17 +37,17 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 			 a = new Vector2D();
 		}
 		
-		p.plus(calcularPosicion(a,t));
+		this.p = p.plus(calcularPosicion(a,t));
 		
-		v.plus(a.scale(t));
+		this.v = v.plus(a.scale(t));
 		
 	}
 	private Vector2D calcularPosicion(Vector2D a,double t) {
 		
 		Vector2D v1= new Vector2D(this.v);
 		Vector2D a1= new Vector2D(a);
-		v1.scale(t);
-		a1.scale((t*t)/2);
+		v1 = v1.scale(t);
+		a1 = a1.scale((t*t)/2);
 		
 		return v1.plus(a1);
 	}
