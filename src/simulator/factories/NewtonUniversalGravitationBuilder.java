@@ -6,8 +6,10 @@ import simulator.model.*;
 
 public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 	
+
 	public NewtonUniversalGravitationBuilder(){
 		this.type = "nlug";
+
 	}
 
 	protected NewtonUniversalGravitation createTheInstance(JSONObject info) {
@@ -22,11 +24,13 @@ public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 	
 	protected  JSONObject createData() {
 		JSONObject objeto= new JSONObject();
+		JSONObject datos= new JSONObject();
 		
+		datos.put("G",  6.67e10-11);
+		objeto.put("type","nlug");
+		objeto.put("data",datos);
 		
-		
-		
-		
+		return objeto;
 	}
 	
 }

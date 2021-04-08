@@ -9,6 +9,7 @@ public abstract class Builder<T>
 	protected String type= null;
 	
 	Builder(){
+
 	}
 	
 	public T createInstance(JSONObject info)throws IllegalArgumentException {
