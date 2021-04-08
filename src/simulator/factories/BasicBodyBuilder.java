@@ -5,13 +5,12 @@ import org.json.*;
 import simulator.misc.Vector2D;
 import simulator.model.*;
 
-public class BasicBodyBuilder<Body> extends Builder {
+public class BasicBodyBuilder extends Builder<Body> {
 	
 	
 	public BasicBodyBuilder() {
-		type = "basic";
+		this.type = "basic";
 	}
-	
 	
 
 	protected Body createTheInstance(JSONObject info) {

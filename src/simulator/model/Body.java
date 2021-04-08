@@ -22,7 +22,7 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 	}
 	
 	public void addForce(Vector2D f) {
-		this.f = this.f.plus(f);
+		this.f  = this.f.plus(f);
 	}
 	
 	public void resetForce() {

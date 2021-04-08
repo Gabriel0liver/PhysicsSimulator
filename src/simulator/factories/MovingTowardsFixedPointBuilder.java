@@ -8,9 +8,8 @@ import simulator.model.*;
 public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 
 	
-	public MovingTowardsFixedPointBuilder(String type){
-		super(type);
-		
+	public MovingTowardsFixedPointBuilder(){
+		this.type = "mtcp";
 	}
 	
 	protected ForceLaws createTheInstance(JSONObject info) {

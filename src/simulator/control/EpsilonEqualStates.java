@@ -6,7 +6,7 @@ import simulator.misc.*;
 public class EpsilonEqualStates implements StateComparator{
 	private double eps;
 	
-	EpsilonEqualStates(double eps){
+	public EpsilonEqualStates(double eps){
 		this.eps=eps;
 	}
 

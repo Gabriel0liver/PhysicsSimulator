@@ -6,10 +6,9 @@ import org.json.JSONObject;
 public abstract class Builder<T> 
 {
 
-	private String type= null;
+	protected String type= null;
 	
-	Builder(String type){
-		this.type=type;
+	Builder(){
 	}
 	
 	public T createInstance(JSONObject info)throws IllegalArgumentException {

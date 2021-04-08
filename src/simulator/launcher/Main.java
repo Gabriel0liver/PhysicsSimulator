@@ -20,20 +20,7 @@ import java.util.*;
 
 import simulator.control.Controller;
 import simulator.control.StateComparator;
-<<<<<<< HEAD
-import simulator.factories.BasicBodyBuilder;
-import simulator.factories.Builder;
-import simulator.factories.BuilderBasedFactory;
-import simulator.factories.EpsilonEqualStatesBuilder;
-import simulator.factories.Factory;
-import simulator.factories.MassEqualStatesBuilder;
-import simulator.factories.MassLosingBodyBuilder;
-import simulator.factories.MovingTowardsFixedPointBuilder;
-import simulator.factories.NewtonUniversalGravitationBuilder;
-import simulator.factories.NoForceBuilder;
-=======
 import simulator.factories.*;
->>>>>>> b32fb5c8f460de3b4fc218608ef154bdce9440ea
 import simulator.model.Body;
 import simulator.model.ForceLaws;
 import simulator.model.PhysicsSimulator;

@@ -7,8 +7,8 @@ import simulator.model.*;
 
 public class NoForceBuilder extends Builder<ForceLaws>{
 	
-	NoForceBuilder(String type){
-		super(type);
+	public NoForceBuilder(){
+		this.type = "nf";
 	}
 	
 	protected NoForce createTheInstance(JSONObject info) {
