@@ -13,7 +13,7 @@ public class BasicBodyBuilder<Body> extends Builder {
 	}
 	
 	
-	
+
 	protected Body createTheInstance(JSONObject info) {
 		
 		try {

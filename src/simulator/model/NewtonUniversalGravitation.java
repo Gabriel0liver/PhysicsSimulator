@@ -4,11 +4,11 @@ import java.util.List;
 
 import simulator.misc.Vector2D;
 
-class NewtonUniversalGravitation implements ForceLaws {
+public class NewtonUniversalGravitation implements ForceLaws {
 	
 	private final double G;
 	
-	NewtonUniversalGravitation(){
+	public NewtonUniversalGravitation(){
 		this.G= 6.67E-11;
 	}
 	public void apply(List<Body> bs) {

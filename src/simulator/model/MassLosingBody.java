@@ -11,8 +11,9 @@ public class MassLosingBody  extends Body{
 	private Double c;
 	
 	
-	public MassLosingBody(Vector2D v,Vector2D p,Double m,Double fac,Double fre) {
-		super( v, p, m);
+
+	public MassLosingBody(String id,Vector2D v,Vector2D p,Double m,Double fac,Double fre) {
+		super(id, v, p,m);
 		lossFactor= fac;
 		lossFrequency= fre;
 		c= 0.0;

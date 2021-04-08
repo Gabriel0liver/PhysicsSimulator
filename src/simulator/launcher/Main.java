@@ -16,9 +16,11 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
+import java.util.*;
 
 import simulator.control.Controller;
 import simulator.control.StateComparator;
+<<<<<<< HEAD
 import simulator.factories.BasicBodyBuilder;
 import simulator.factories.Builder;
 import simulator.factories.BuilderBasedFactory;
@@ -29,6 +31,9 @@ import simulator.factories.MassLosingBodyBuilder;
 import simulator.factories.MovingTowardsFixedPointBuilder;
 import simulator.factories.NewtonUniversalGravitationBuilder;
 import simulator.factories.NoForceBuilder;
+=======
+import simulator.factories.*;
+>>>>>>> b32fb5c8f460de3b4fc218608ef154bdce9440ea
 import simulator.model.Body;
 import simulator.model.ForceLaws;
 import simulator.model.PhysicsSimulator;
@@ -74,6 +79,7 @@ public class Main {
 		stateComparatorBuilders.add(new EpsilonEqualStatesBuilder());
 		stateComparatorBuilders.add(new MassEqualStatesBuilder());
 		_stateComparatorFactory = new BuilderBasedFactory<StateComparator>(stateComparatorBuilders);
+
 	}
 
 	private static void parseArgs(String[] args) {
@@ -273,6 +279,10 @@ public class Main {
 		}
 	}
 
+	private static void parseOutput(CommandLine line) throws ParseException{
+		
+	}
+	
 	private static void startBatchMode() throws Exception {
 		
 		ForceLaws forceLaws = _forceLawsFactory.createInstance(_forceLawsInfo);
@@ -294,6 +304,7 @@ public class Main {
 		InputStream eos = new FileInputStream(new File(_expectedOutFile));
 		
 		controller.run(_steps,os,eos,cmp);
+
 	}
 
 	private static void start(String[] args) throws Exception {

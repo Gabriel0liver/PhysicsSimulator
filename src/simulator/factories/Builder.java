@@ -5,9 +5,11 @@ import org.json.JSONObject;
 
 public abstract class Builder<T> 
 {
-	protected String type= null;
+
+	private String type= null;
 	
-	Builder(){
+	Builder(String type){
+		this.type=type;
 	}
 	
 	public T createInstance(JSONObject info)throws IllegalArgumentException {
@@ -30,7 +32,8 @@ public abstract class Builder<T>
 	protected abstract T createTheInstance(JSONObject info); 
 	
 		
-	public  JSONObject getBuilderInfo() {//supongo que el objetivo es crear un ejemplo de como tiene que ser la construcci�n de un objeto;
+	public  JSONObject getBuilderInfo() {//supongo que el objetivo es crear un ejemplo de como tiene que ser la construccion de un objeto;
+
 		JSONObject info= new JSONObject();;
 		info= createData();
 		
