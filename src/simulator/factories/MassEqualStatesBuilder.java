@@ -22,5 +22,22 @@ public class MassEqualStatesBuilder extends Builder<StateComparator>{
 		
 		return null;
 	}
+	
+	protected  JSONObject createData() {
+		JSONObject objeto= new JSONObject();
+		JSONObject datos= new JSONObject();
+		
+		
+		
+		objeto.put("type","masseq");
+		objeto.put("data",datos);
+		
+		return objeto;
+		
+		
+		
+		
+		
+	}
 
 }
