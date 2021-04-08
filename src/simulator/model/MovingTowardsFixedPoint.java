@@ -3,11 +3,11 @@ package simulator.model;
 import java.util.List;
 import simulator.misc.Vector2D;
 
-public class MovingTowardsFixedPoint {
+public class MovingTowardsFixedPoint implements ForceLaws {
 	private double g;
 	private Vector2D c;
 	
-	MovingTowardsFixedPoint(double g, Vector2D c){
+	public MovingTowardsFixedPoint(double g, Vector2D c){
 		this.g=g;
 		this.c=c;
 	}

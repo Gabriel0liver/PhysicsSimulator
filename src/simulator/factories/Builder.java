@@ -1,50 +1,60 @@
 package simulator.factories;
 
 import java.util.List;
-
 import org.json.JSONObject;
 
-public class Builder<T> implements Factory<T> {
+public abstract class Builder<T> 
+{
+	private String type= null;
 	
-	public Builder (){
-		
+	Builder(String type){
+		this.type=type;
 	}
 	
 	public T createInstance(JSONObject info)throws IllegalArgumentException {
-		String[] s= { "basic","mlb", "nlug","mtcp", "nf","masseq", "epseq"} ;
-		boolean encontrado= false;
-		int i=0;
-		T obj;
 		
-		while(!encontrado && i<7 ) {
-			if(info.get("type")==s[i])
-				encontrado= true;
-			i++;
+		T obj=null;
+	
+		
+		if(info.get("type")== this.type) {
+			obj= createTheInstance(info);
 		}
-		
-		if(!encontrado)
+		else 
 			return null;
 		
-		obj= fabricateObject(info);
-		
 		if(obj== null) {
-			throw new IllegalArgumentException("No se ha conseguido crear el objeto"+ s[i]+"/n");
+			throw new IllegalArgumentException("No se ha conseguido crear el objeto"+ info.getDouble("type")+"/n");
 		}
-		
-		
 		return obj;
+	}
+	
+	protected abstract T createTheInstance(JSONObject info); 
+	
+		
+	public  JSONObject getBuilderInfo() {//supongo que el objetivo es crear un ejemplo de como tiene que ser la construcción de un objeto;
+		JSONObject info= new JSONObject();;
+		info= createData();
+		
+		
+		return info;
 		
 	}
 	
-	private T fabricateObject(JSONObject info) {
-		
-	} //si hay algún error, se devuelve un null.
-		
-	
+	protected abstract JSONObject createData();
 
-	public List<JSONObject> getInfo(){
-		
-	}
+	
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

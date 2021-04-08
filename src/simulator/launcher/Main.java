@@ -8,11 +8,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
+import java.util.*;
 
 import simulator.control.StateComparator;
-import simulator.factories.Factory;
+import simulator.factories.*;
 import simulator.model.Body;
 import simulator.model.ForceLaws;
+import simulator.model.PhysicsSimulator;
 
 public class Main {
 
@@ -36,10 +38,24 @@ public class Main {
 
 	private static void init() {
 		// TODO initialize the bodies factory
-
-		// TODO initialize the force laws factory
-
-		// TODO initialize the state comparator
+		
+		ArrayList<Builder<Body>> bodyBuilders = new ArrayList<>();
+        bodyBuilders.add(new BasicBodyBuilder());
+        bodyBuilders.add(new MassLosingBodyBuilder());
+        _bodyFactory = new BuilderBasedFactory<Body>(bodyBuilders);
+        
+     // TODO initialize the force laws factory
+        ArrayList<Builder<ForceLaws>> gravityLawsBuilders = new ArrayList<>();
+        gravityLawsBuilders.add(new NewtonUniversalGravitationBuilder());
+        gravityLawsBuilders.add(new MovingTowardsFixedPointBuilder());
+        gravityLawsBuilders.add(new NoForceBuilder());
+        _forceLawsFactory = new BuilderBasedFactory<ForceLaws>(gravityLawsBuilders);
+        
+     // TODO initialize the state comparator
+        ArrayList<Builder<StateComparator>> stateComparatorBuilders = new ArrayList<>();
+        stateComparatorBuilders.add(new EpsilonEqualStatesBuilder());
+        stateComparatorBuilders.add(new MassEqualStatesBuilder());
+        _stateComparatorFactory = new BuilderBasedFactory<StateComparator>(stateComparatorBuilders);
 	}
 
 	private static void parseArgs(String[] args) {
@@ -57,6 +73,7 @@ public class Main {
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
 			// TODO add support of -o, -eo, and -s (define corresponding parse methods)
+			
 
 			parseDeltaTimeOption(line);
 			parseForceLawsOption(line);
@@ -89,8 +106,25 @@ public class Main {
 		// input file
 		cmdLineOptions.addOption(Option.builder("i").longOpt("input").hasArg().desc("Bodies JSON input file.").build());
 
-		// TODO add support for -o, -eo, and -s (add corresponding information to
-		// cmdLineOptions)
+		// TODO add support for -o, -eo, and -s (add corresponding information to cmdLineOptions)
+		
+		//output
+		
+		cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg().desc(" Output file, where output is written.\r\n"
+				+ "Default value: the standard output.").build()); //insertar el standard output
+		
+		//expected output
+		
+		cmdLineOptions.addOption(Option.builder("eo").longOpt("expected-output").hasArg().desc("The expected output file. If not provided\r\n"
+				+ "no comparison is applied").build());
+		
+		
+		//steps
+		
+		cmdLineOptions.addOption(Option.builder("s").longOpt("steps").hasArg().desc("An integer representing the number of\r\n"
+				+ "simulation steps. Default value: 150.").build());
+		
+		
 
 		// delta-time
 		cmdLineOptions.addOption(Option.builder("dt").longOpt("delta-time").hasArg()
@@ -211,8 +245,15 @@ public class Main {
 		}
 	}
 
+	private static void parseOutput(CommandLine line) throws ParseException{
+		
+	}
+	
 	private static void startBatchMode() throws Exception {
 		// TODO complete this method
+		
+		
+		
 	}
 
 	private static void start(String[] args) throws Exception {

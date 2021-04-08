@@ -12,9 +12,9 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 	protected Vector2D p;	//posicion
 	protected Double m;		//Masa
 	
-	public Body(Vector2D v,Vector2D f,Vector2D p,Double m) {
+	public Body(String id,Vector2D p,Vector2D v,Double m) {
+		this.id=id;
 		this.v= v; //velocidad
-		this.f=f; //fuerza
 		this.p=p; //posicion
 		this.m= m; //masa
 		

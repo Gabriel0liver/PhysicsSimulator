@@ -1,47 +1,50 @@
 package simulator.factories;
 
 import java.util.List;
-
-import org.json.JSONObject;
+import org.json.*;
+import simulator.misc.Vector2D;
+import simulator.model.*;
 
 public class BasicBodyBuilder<Body> extends Builder {
 	
 	
-	
-	
-	public Body createInstance(JSONObject info)throws IllegalArgumentException {
-		boolean encontrado= false;
-		int i=0;
-		Body obj;
-		
-		while(!encontrado && i<7 ) {
-			if(info.get("type")=="basic")
-				encontrado= true;
-			i++;
-		}
-		
-		if(!encontrado)
-			return null;
-		
-		obj= fabricateObject(info);
-		
-		if(obj== null) {
-			throw new IllegalArgumentException("No se ha conseguido crear el objeto"+ "basic"+"/n");
-		}
-		
-		
-		return obj;
+	public BasicBodyBuilder(String type){
+		super(type);
 		
 	}
 	
-	private Body fabricateObject(JSONObject info) {
+	protected Body createTheInstance(JSONObject info) {
+		
+		try {
+		Vector2D v;
+		Vector2D p;
+		JSONObject datos= info.getJSONObject("data");
+		JSONArray vectores = new JSONArray();
+		
+		vectores= datos.getJSONArray("v");
+		v= new Vector2D(vectores.getDouble(0),vectores.getDouble(1));
+		vectores= datos.getJSONArray("p");
+		p= new Vector2D(vectores.getDouble(0),vectores.getDouble(1));
+		
+		Body objeto= new Body(datos.getString("id"),p,v,datos.getDouble("m"));
+		return objeto;
+		}
+		catch(Exception e) {
+			return null;
+		}
 		
 		
-	} //si hay algún error, se devuelve un null.
+	}
+	
+	protected  JSONObject createData() {
+		JSONObject objeto= new JSONObject();
 		
+		
+		
+		
+		
+	}
 	
 
-	public List<JSONObject> getInfo(){
-		
-	}
+	
 }

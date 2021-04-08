@@ -28,7 +28,7 @@ public class Controller {
 		
 	}
 	
-	public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) {
+	public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) {// hay que terminar la funcion
 		for(int i=0; i<n;i++) {
 			this.simulator.Advance();
 		}
