@@ -5,7 +5,7 @@ import org.json.*;
 import simulator.misc.Vector2D;
 import simulator.model.*;
 
-public class BasicBodyBuilder<Body> extends Builder {
+public class BasicBodyBuilder extends Builder<Body> {
 	
 	
 	public BasicBodyBuilder() {
@@ -39,10 +39,21 @@ public class BasicBodyBuilder<Body> extends Builder {
 	
 	protected  JSONObject createData() {
 		JSONObject objeto= new JSONObject();
+		JSONObject datos= new JSONObject();
+		JSONArray vectores = new JSONArray();
 		
 		
+		datos.put("id","b1");
+		vectores.put(0.0);
+		vectores.put(0.0);
+		datos.put("p",vectores);
+		datos.put("v",vectores);
+		datos.put("m", 5.97e24);
 		
+		objeto.put("type","basic");
+		objeto.put("data",datos);
 		
+		return objeto;
 		
 	}
 	

@@ -8,8 +8,8 @@ import simulator.model.*;
 public class MassLosingBodyBuilder extends Builder<MassLosingBody>{
 
 	MassLosingBodyBuilder(String type){
-		super(type);
-	}
+		type = "mlb";
+		}
 	
 protected MassLosingBody createTheInstance(JSONObject info) {
 		
@@ -36,11 +36,27 @@ protected MassLosingBody createTheInstance(JSONObject info) {
 	
 	protected  JSONObject createData() {
 		JSONObject objeto= new JSONObject();
+		JSONObject datos= new JSONObject();
+		JSONArray vectores = new JSONArray();
 		
 		
+		datos.put("id","b1");
+		vectores.put(-3.5e10);
+		vectores.put(0.0);
+		datos.put("p",vectores);
+		vectores.remove(0);
+		vectores.remove(1);
+		vectores.put(0.0);
+		vectores.put(1.4e03);
+		datos.put("v",vectores);
+		datos.put("m", 5.97e24);
+		datos.put("freq", 1e3);
+		datos.put("factor", 1e-3);
 		
+		objeto.put("type","mlb");
+		objeto.put("data",datos);
 		
-		
+		return objeto;
 	}
 	
 }

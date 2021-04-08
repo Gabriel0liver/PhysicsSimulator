@@ -9,7 +9,7 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 
 	
 	public MovingTowardsFixedPointBuilder(String type){
-		super(type);
+		type= "mtcp";
 		
 	}
 	
@@ -32,7 +32,18 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 	
 	protected  JSONObject createData() {
 		JSONObject objeto= new JSONObject();
+		JSONObject datos= new JSONObject();
+		JSONArray vectores = new JSONArray();
 		
+		vectores.put(0.0);
+		vectores.put(0.0);
+		datos.put("c",vectores);
+		datos.put("g", 9.81);
+		
+		objeto.put("type","mtcp");
+		objeto.put("data",datos);
+		
+		return objeto;
 		
 		
 		
