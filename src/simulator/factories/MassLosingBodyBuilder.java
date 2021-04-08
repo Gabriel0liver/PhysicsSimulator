@@ -5,11 +5,13 @@ import org.json.*;
 import simulator.misc.Vector2D;
 import simulator.model.*;
 
-public class MassLosingBodyBuilder extends Builder<MassLosingBody>{
+public class MassLosingBodyBuilder extends Builder<Body>{
 
-	MassLosingBodyBuilder(String type){
-		type = "mlb";
-		}
+
+	public MassLosingBodyBuilder(){
+		this.type = "mlb";
+	}
+
 	
 protected MassLosingBody createTheInstance(JSONObject info) {
 		

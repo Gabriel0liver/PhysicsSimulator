@@ -6,8 +6,10 @@ import simulator.model.*;
 
 public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 	
-	public NewtonUniversalGravitationBuilder(String type){
-		type = "nlug";
+
+	public NewtonUniversalGravitationBuilder(){
+		this.type = "nlug";
+
 	}
 
 	protected NewtonUniversalGravitation createTheInstance(JSONObject info) {

@@ -9,9 +9,8 @@ public class BasicBodyBuilder extends Builder<Body> {
 	
 	
 	public BasicBodyBuilder() {
-		type = "basic";
+		this.type = "basic";
 	}
-	
 	
 
 	protected Body createTheInstance(JSONObject info) {
