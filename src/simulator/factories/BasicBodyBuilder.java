@@ -10,6 +10,7 @@ public class BasicBodyBuilder extends Builder<Body> {
 	
 	public BasicBodyBuilder() {
 		this.type = "basic";
+		this.desc= "basic body";
 	}
 	
 

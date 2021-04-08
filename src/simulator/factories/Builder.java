@@ -7,7 +7,7 @@ public abstract class Builder<T>
 {
 
 	protected String type= null;
-	
+	protected String desc= null;
 	Builder(){
 
 	}
