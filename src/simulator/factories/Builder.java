@@ -7,6 +7,7 @@ public abstract class Builder<T>
 {
 
 	protected String type= null;
+	protected String desc= null;
 	
 	Builder(){
 
@@ -15,16 +16,15 @@ public abstract class Builder<T>
 	public T createInstance(JSONObject info)throws IllegalArgumentException {
 		
 		T obj=null;
-	
 		
-		if(info.get("type")== this.type) {
-			obj= createTheInstance(info);
+		if(info.getString("type").equals(this.type)) {
+			obj = createTheInstance(info);
 		}
 		else 
 			return null;
 		
 		if(obj== null) {
-			throw new IllegalArgumentException("No se ha conseguido crear el objeto"+ info.getDouble("type")+"/n");
+			throw new IllegalArgumentException("No se ha conseguido crear el objeto"+ info.get("type"));
 		}
 		return obj;
 	}

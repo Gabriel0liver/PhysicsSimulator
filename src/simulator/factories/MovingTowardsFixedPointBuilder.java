@@ -11,22 +11,30 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 
 	public MovingTowardsFixedPointBuilder(){
 		this.type = "mtcp";
-
+		this.desc = "body moves toward fixed point";
 	}
 	
 	protected ForceLaws createTheInstance(JSONObject info) {
 		
 		try {
-			Vector2D v;
+			Vector2D v = new Vector2D(0,0);
 			JSONArray vectores = new JSONArray();
+			JSONObject datos= info.getJSONObject("data");
+			double g = 9.81;
 			
-			vectores= info.getJSONObject("data").getJSONArray("c");
-			v= new Vector2D(vectores.getDouble(0),vectores.getDouble(1));
+			if(datos.has("c")) {
+				vectores= datos.getJSONArray("c");
+				v= new Vector2D(vectores.getDouble(0),vectores.getDouble(1));
+			}
+			if(datos.has("g")) {
+				g = datos.getDouble("g");
+			}
 			
-			return new MovingTowardsFixedPoint(info.getJSONObject("data").getDouble("g"),v);
+			return new MovingTowardsFixedPoint(g,v);
 		}
 			
 			catch(Exception e) {
+				System.out.println(e.getMessage());
 				return null;
 			}
 	}
@@ -41,7 +49,8 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 		datos.put("c",vectores);
 		datos.put("g", 9.81);
 		
-		objeto.put("type","mtcp");
+		objeto.put("type",this.type);
+		objeto.put("desc",this.desc);
 		objeto.put("data",datos);
 		
 		return objeto;

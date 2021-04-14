@@ -10,6 +10,7 @@ public class MassLosingBodyBuilder extends Builder<Body>{
 
 	public MassLosingBodyBuilder(){
 		this.type = "mlb";
+		this.desc = "body that looses mass";
 	}
 
 	
@@ -31,6 +32,7 @@ protected MassLosingBody createTheInstance(JSONObject info) {
 		return objeto;
 	}
 	catch(Exception e) {
+		System.out.println(e.getMessage());
 		return null;
 	}
 	
@@ -55,7 +57,8 @@ protected MassLosingBody createTheInstance(JSONObject info) {
 		datos.put("freq", 1e3);
 		datos.put("factor", 1e-3);
 		
-		objeto.put("type","mlb");
+		objeto.put("type",this.type);
+		objeto.put("desc",this.desc);
 		objeto.put("data",datos);
 		
 		return objeto;

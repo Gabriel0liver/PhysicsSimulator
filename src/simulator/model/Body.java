@@ -1,5 +1,6 @@
 package simulator.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.misc.*;
 import java.lang.Double;
@@ -30,7 +31,6 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 	}
 	
 	public void move(double t) {//t = tiempo
-		
 		Vector2D a; //aceleracion
 		if(m!=0) {
 			 a= new Vector2D((f.getX()/m),(f.getY()/m));
@@ -60,9 +60,18 @@ public class Body {//supongo que en la futura practica pasaremos al Vector3D y h
 		
 		b.put("id",this.id);
 		b.put("m",this.m);
-		b.put("p",this.p);
-		b.put("v",this.v);
-		b.put("f",this.f);
+		JSONArray p = new JSONArray();
+		p.put(this.p.getX());
+		p.put(this.p.getY());
+		b.put("p",p);
+		JSONArray v = new JSONArray();
+		v.put(this.v.getX());
+		v.put(this.v.getY());
+		b.put("v",v);
+		JSONArray f = new JSONArray();
+		f.put(this.f.getX());
+		f.put(this.f.getY());
+		b.put("f",f);
 		
 		return b;
 	}

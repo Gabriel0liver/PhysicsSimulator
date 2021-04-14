@@ -14,16 +14,22 @@ public class EpsilonEqualStatesBuilder extends Builder<StateComparator> {
 	
 	public EpsilonEqualStatesBuilder() {
 		this.type = "epseq";
+		this.desc = "epsilon compare";
 	}
 	
 	protected StateComparator createTheInstance(JSONObject info) {
 		
 		try {
 		JSONObject datos= info.getJSONObject("data");
-		EpsilonEqualStates objeto= new EpsilonEqualStates(datos.getDouble("eps"));
+		double eps = 0.0;
+		if(datos.has("eps")) {
+			eps = datos.getDouble("eps");
+		}
+		EpsilonEqualStates objeto= new EpsilonEqualStates(eps);
 		return objeto;
 		}
 		catch(Exception e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 		
@@ -36,7 +42,8 @@ public class EpsilonEqualStatesBuilder extends Builder<StateComparator> {
 		
 		
 		datos.put("eps", 0.1);
-		objeto.put("type","epseq");
+		objeto.put("type",this.type);
+		objeto.put("desc",this.desc);
 		objeto.put("data",datos);
 		
 		return objeto;

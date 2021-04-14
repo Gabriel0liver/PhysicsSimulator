@@ -8,9 +8,10 @@ public class NewtonUniversalGravitation implements ForceLaws {
 	
 	private final double G;
 	
-	public NewtonUniversalGravitation(){
-		this.G= 6.67E-11;
+	public NewtonUniversalGravitation(double g){
+		this.G= g;
 	}
+	
 	public void apply(List<Body> bs) {
 		Body body;
 		Body aux;
@@ -20,12 +21,12 @@ public class NewtonUniversalGravitation implements ForceLaws {
 			
 			body= bs.get(i);
 			
-			for(int j=i+1; j< bs.size();j++) {
-				
-				aux= bs.get(j);
-				f=calcular_fuerza(body,aux);
-				body.getForce().plus(f);		//reutilizamos el resultado de los dos cuerpos para no tener que recalcularlo
-				aux.getForce().plus(f);
+			for(int j=0; j< bs.size();j++) {
+				if(j != i) {
+					aux= bs.get(j);
+					f=calcular_fuerza(body,aux);
+					body.addForce(body.getForce().plus(f));
+				}
 			}
 			
 		}
@@ -35,6 +36,8 @@ public class NewtonUniversalGravitation implements ForceLaws {
 	
 	private Vector2D calcular_fuerza(Body b1,Body b2) {
 		Vector2D force;
+		Vector2D direccion;
+		double fuerza;
 		double masa=b1.getMass();
 		
 		if(masa==0) {	//si la masa = 0 entonces la fuerza sera nula
@@ -42,19 +45,22 @@ public class NewtonUniversalGravitation implements ForceLaws {
 			return force;
 		}
 		
-		Vector2D distancia = new Vector2D(b1.getPosition());
-		double x,y;	//creo x e y para poder calcular la division del vector que hace de denominador
+		Vector2D distancia1 = new Vector2D(b1.getPosition());
+		Vector2D distancia2 = new Vector2D(b2.getPosition());
 		
-		distancia.dot(distancia);	//obtengo las variables necesarias para calcular la fuerza
-		x= distancia.getX();
-		y=distancia.getY();
-		masa= masa *b2.getMass();
+		double absoluto = distancia1.distanceTo(distancia2);
+		if(absoluto == 0.0) {
+			fuerza = 0.0;
+		}else {
+			masa= masa * b2.getMass();
+			fuerza = G*(masa/(absoluto*absoluto));
+		}
 		
-		x=G*masa/x;	//calculo la fuerza
-		y=G*masa/y;
-		force = new Vector2D(x,y);
+
 		
-		return force;
+		direccion = distancia2.minus(distancia1).direction();
+		
+		return direccion.scale(fuerza);
 	}
 
 	

@@ -10,6 +10,7 @@ public class BasicBodyBuilder extends Builder<Body> {
 	
 	public BasicBodyBuilder() {
 		this.type = "basic";
+		this.desc = "basic body";
 	}
 	
 
@@ -30,6 +31,7 @@ public class BasicBodyBuilder extends Builder<Body> {
 		return objeto;
 		}
 		catch(Exception e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 		
@@ -49,7 +51,8 @@ public class BasicBodyBuilder extends Builder<Body> {
 		datos.put("v",vectores);
 		datos.put("m", 5.97e24);
 		
-		objeto.put("type","basic");
+		objeto.put("type",this.type);
+		objeto.put("desc",this.desc);
 		objeto.put("data",datos);
 		
 		return objeto;

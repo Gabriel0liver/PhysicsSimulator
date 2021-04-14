@@ -9,6 +9,7 @@ public class NoForceBuilder extends Builder<ForceLaws>{
 	
 	public NoForceBuilder(){
 		this.type = "nf";
+		this.desc = "no force is applied";
 	}
 	
 	protected NoForce createTheInstance(JSONObject info) {
@@ -21,7 +22,8 @@ public class NoForceBuilder extends Builder<ForceLaws>{
 		
 		
 		
-		objeto.put("type","nf");
+		objeto.put("type",this.type);
+		objeto.put("desc",this.desc);
 		objeto.put("data",datos);
 		
 		return objeto;

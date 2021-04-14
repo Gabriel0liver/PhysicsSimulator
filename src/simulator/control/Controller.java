@@ -27,9 +27,8 @@ public class Controller {
 		
 	}
 	
-	public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) {
-		JSONObject output = new JSONObject();
-		JSONArray states = new JSONArray();
+	public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) throws Exception  {
+		PrintStream p = new PrintStream(out);
 		
 		JSONObject jsonEO;
 		JSONArray expectedStates = null;
@@ -38,23 +37,21 @@ public class Controller {
 			expectedStates= jsonEO.getJSONArray("states");
 		}
 		
-		
-		states.put(simulator.getState());
+		p.println("{");
+		p.println("\"states\": [");
+		p.println(simulator.getState());
 		for (int i = 0; i < n; i++) {
 			if(expOut != null) {
-				cmp.equal(simulator.getState(), expectedStates.getJSONObject(i));
-				//FALTA LANZAR EXCEPCION
+				if(!cmp.equal(simulator.getState(), expectedStates.getJSONObject(i))) {
+					throw new Exception("Diference in step: " + i);
+				}
 			}
 			simulator.Advance();
-			states.put(simulator.getState());
+			p.println(","+simulator.getState());
 		}
+		
+		p.println("]");
+		p.println("}");
 
-		output.put("states", states);
-
-		try {
-			out.write(output.toString().getBytes());
-		} catch (IOException a) {
-			System.err.println("Error en escritura de salida");
-		}
 	}
 }
