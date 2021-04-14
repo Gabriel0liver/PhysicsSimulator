@@ -11,6 +11,7 @@ public class MassLosingBodyBuilder extends Builder<Body>{
 	public MassLosingBodyBuilder(){
 		this.type = "mlb";
 		this.desc = "body that looses mass";
+
 	}
 
 	
