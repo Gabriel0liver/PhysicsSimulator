@@ -1,4 +1,4 @@
-package simulator.launcher;
+ package simulator.launcher;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +30,7 @@ public class Main {
 	// default values for some parameters
 	//
 	private final static Double _dtimeDefaultValue = 2500.0;
-	private final static int _stepsDefaultValue = 150;
+	private final static Integer _stepsDefaultValue = 150;
 	private final static String _forceLawsDefaultValue = "nlug";
 	private final static String _stateComparatorDefaultValue = "epseq";
 
@@ -193,11 +193,11 @@ public class Main {
 	}
 	
 	private static void parseStepsOption(CommandLine line) throws ParseException {
-		String s = line.getOptionValue("s", _dtimeDefaultValue.toString());
+		String s = line.getOptionValue("s", _stepsDefaultValue.toString());
 		try {
 			_steps = Integer.parseInt(s);
 		} catch (Exception e) {
-			throw new ParseException("Invalid delta-time value: " + s);
+			throw new ParseException("Invalid steps value: " + s);
 		}
 		
 	}
@@ -251,7 +251,7 @@ public class Main {
 	}
 
 	private static void parseForceLawsOption(CommandLine line) throws ParseException {
-		String fl = line.getOptionValue("gl", _forceLawsDefaultValue);
+		String fl = line.getOptionValue("fl", _forceLawsDefaultValue);
 		_forceLawsInfo = parseWRTFactory(fl, _forceLawsFactory);
 		if (_forceLawsInfo == null) {
 			throw new ParseException("Invalid force laws: " + fl);
@@ -275,11 +275,12 @@ public class Main {
 		ForceLaws forceLaws = _forceLawsFactory.createInstance(_forceLawsInfo);
 		PhysicsSimulator simulator = new PhysicsSimulator(forceLaws, _dtime);
 		StateComparator cmp = _stateComparatorFactory.createInstance(_stateComparatorInfo);
-		Controller controller = new Controller(simulator, _bodyFactory);
+		Controller controller = new Controller(simulator, _bodyFactory,_forceLawsFactory);
 		
 		try (InputStream is = new FileInputStream(new File(_inFile));) {
 			controller.loadBodies(is);
 		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
 			throw new ParseException("Invalid Input File");
 		}
 		
@@ -288,9 +289,14 @@ public class Main {
 		if(_outFile != null) {
 			os = new FileOutputStream(new File(_outFile));
 		}
-		InputStream eos = new FileInputStream(new File(_expectedOutFile));
 		
-		controller.run(_steps,os,eos,cmp);
+		InputStream eos = null;
+		if(_expectedOutFile != null) {
+			eos = new FileInputStream(new File(_expectedOutFile));
+		}
+		
+		
+		controller.run(_steps);
 
 	}
 

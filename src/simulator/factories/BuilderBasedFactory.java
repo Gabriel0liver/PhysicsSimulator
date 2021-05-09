@@ -14,13 +14,14 @@ public class BuilderBasedFactory <T> implements Factory<T>{
 	public T createInstance(JSONObject info)throws IllegalArgumentException {
 		
 		T object=null;
+		
 			
 		for(Builder<T> i : this.builders ) {
 			object= i.createInstance(info);
 			if(object!= null)
 				return object;
 		}
-		throw new IllegalArgumentException("No se ha conseguido crear el objeto");
+		throw new IllegalArgumentException("No se ha conseguido crear el objeto " + info.getString("type"));
 		
 	}
 	

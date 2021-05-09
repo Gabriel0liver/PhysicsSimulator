@@ -9,6 +9,7 @@ public class MassEqualStatesBuilder extends Builder<StateComparator>{
 	
 	public MassEqualStatesBuilder(){
 		this.type = "masseq";
+		this.desc = "compares mass";
 	}
 	
 	protected StateComparator createTheInstance(JSONObject info) {
@@ -17,6 +18,7 @@ public class MassEqualStatesBuilder extends Builder<StateComparator>{
 		new MassEqualStates();
 		}
 		catch(Exception e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 		
@@ -29,7 +31,8 @@ public class MassEqualStatesBuilder extends Builder<StateComparator>{
 		
 		
 		
-		objeto.put("type","masseq");
+		objeto.put("type",this.type);
+		objeto.put("desc",this.desc);
 		objeto.put("data",datos);
 		
 		return objeto;

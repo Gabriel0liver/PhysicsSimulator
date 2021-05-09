@@ -14,6 +14,7 @@ public class PhysicsSimulator {
 		private double tiempoActual;
 		private ForceLaws leyesFuerza;
 		List<Body> cuerpos;
+		List<SimulatorObserver> o;
 		
 		
 		public PhysicsSimulator( ForceLaws l, double dt) throws IllegalArgumentException{
@@ -46,11 +47,16 @@ public class PhysicsSimulator {
 			}
 			
 			this.tiempoActual += this.dt;
+			
+			for(SimulatorObserver i: this.o) {
+				
+				i.onAdvance(cuerpos, dt);
+			}
 		}
 		
 		
 		public void addBody(Body b) throws IllegalArgumentException{
-			Body bs;
+			Body bs;		// este objeto compara todos los cuerpos del simulador con la clase b para que no hayan problemas
 			for(int i=0; i< this.cuerpos.size();i++) {
 				bs=this.cuerpos.get(i);
 				
@@ -58,6 +64,50 @@ public class PhysicsSimulator {
 					throw new IllegalArgumentException("El Id esta repetido ");
 			}
 			this.cuerpos.add(b);
+			
+			for(SimulatorObserver i: this.o) {
+				i.onBodyAdded(cuerpos, b);
+			}
+		}
+		
+		public void addObserver(SimulatorObserver o) {
+			if(!this.o.contains(o)) {
+				o.onRegister(this.cuerpos, this.tiempoActual, dt, this.leyesFuerza.toString());
+				this.o.add(o);
+				
+			}
+				
+			
+		}
+		
+		public void reset() {
+			this.tiempoActual=0;
+			this.leyesFuerza= null;
+			
+			for(SimulatorObserver i: this.o) {
+				i.onReset(cuerpos, tiempoActual, dt, this.leyesFuerza.toString());
+			}
+		}
+		
+		//getters y setters
+		
+		public void setDeltaTime(double dt) {
+			this.dt=dt;
+			
+			for(SimulatorObserver i: this.o) {
+				i.onDeltaTimeChanged(this.dt);
+			}
+		}
+		
+		public void setForceLawsLaws(ForceLaws forceLaws)throws IllegalArgumentException {
+			if(forceLaws == null) {
+				throw new IllegalArgumentException("La ley de Fuerza es nulo ");
+			}
+			this.leyesFuerza=forceLaws;
+			
+			for(SimulatorObserver i: this.o) {
+				i.onForceLawsChanged(this.leyesFuerza.toString());
+			}
 		}
 		
 		

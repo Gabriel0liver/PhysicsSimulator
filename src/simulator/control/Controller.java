@@ -2,6 +2,8 @@ package simulator.control;
 
 
 import java.io.*;
+import java.util.List;
+
 import org.json.*;
 import simulator.model.*;
 import simulator.factories.*;
@@ -9,10 +11,14 @@ import simulator.factories.*;
 public class Controller {
 	private PhysicsSimulator simulator;
 	private Factory<Body> factoria;
+	Factory<ForceLaws> Fl;
 	
-	public Controller(PhysicsSimulator simulator,Factory<Body> factoria){
+	
+	public Controller(PhysicsSimulator simulator,Factory<Body> factoria,Factory<ForceLaws> Fl){
 		this.simulator= simulator;
 		this.factoria=factoria;
+		this.Fl=Fl;
+
 	}
 	
 	
@@ -27,34 +33,31 @@ public class Controller {
 		
 	}
 	
-	public void run(int n, OutputStream out, InputStream expOut, StateComparator cmp) {
-		JSONObject output = new JSONObject();
-		JSONArray states = new JSONArray();
-		
-		JSONObject jsonEO;
-		JSONArray expectedStates = null;
-		if(expOut != null) {
-			jsonEO = new JSONObject(new JSONTokener(expOut));
-			expectedStates= jsonEO.getJSONArray("states");
-		}
-		
-		
-		states.put(simulator.getState());
+	public void run(int n) throws Exception  {// Opcional hacer el Output stream pag 4 practica 2
 		for (int i = 0; i < n; i++) {
-			if(expOut != null) {
-				cmp.equal(simulator.getState(), expectedStates.getJSONObject(i));
-				//FALTA LANZAR EXCEPCION
-			}
 			simulator.Advance();
-			states.put(simulator.getState());
-		}
-
-		output.put("states", states);
-
-		try {
-			out.write(output.toString().getBytes());
-		} catch (IOException a) {
-			System.err.println("Error en escritura de salida");
 		}
 	}
+	
+	public void reset() {
+		this.simulator.reset();
+	}
+	
+	public void setDeltaTime(double dt) {
+	this.simulator.setDeltaTime(dt);
+	}
+	
+	public void addObserver(SimulatorObserver o) {
+		this.simulator.addObserver(o);
+	}
+	
+	public List<JSONObject> getForceLawsInfo(){
+		return Fl.getInfo();
+	}
+	
+	public void setForceLaws(JSONObject info) {
+		simulator.setForceLawsLaws(Fl.createInstance(info));
+	}
+	
+	
 }

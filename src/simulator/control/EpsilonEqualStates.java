@@ -28,7 +28,7 @@ public class EpsilonEqualStates implements StateComparator{
 			b1= ar1.getJSONObject(i);
 			b2= ar2.getJSONObject(i);
 			
-			if(b1.getBoolean("id")!=b2.getBoolean("id") || b1.getBoolean("mass")!=b2.getBoolean("mass"))
+			if(b1.getString("id")!=b2.getString("id") || b1.getBoolean("mass")!=b2.getBoolean("mass"))
 				list=false;
 			
 			compararAtributos(b1,b2);
@@ -40,9 +40,12 @@ public class EpsilonEqualStates implements StateComparator{
 		return keys&& list;
 	}
 	private boolean compararAtributos(JSONObject s1, JSONObject s2) { 
-		Vector2D v1,v2;
+		
 		String[] s= {"v","f","p"} ;
+		double x,y;
 		double m1= s1.getDouble("m"),m2= s2.getDouble("m");
+		JSONArray v1= new JSONArray();
+		JSONArray v2= new JSONArray();
 	
 		if(s1.get("id")!=s1.get("id"))
 			return false;
@@ -51,9 +54,9 @@ public class EpsilonEqualStates implements StateComparator{
 			return false;
 		
 		for(int i=0;i<3;i++){
-			//pasar el json object a Vector2D
-			v1= (Vector2D) s1.get(s[i]);
-			v2= (Vector2D) s2.get(s[i]);
+			v1 = s1.getJSONArray(s[i]);
+			v2 = s2.getJSONArray(s[i]);
+			
 			
 			if(v1!=v2) {
 				return false;
