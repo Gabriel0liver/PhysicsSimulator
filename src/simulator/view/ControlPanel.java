@@ -54,7 +54,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 	
 	
 	//Buttons
-	private void addLoad(JToolBar toolBar) {
+	private void addLoad(JToolBar toolBar) throws Exception {
 		JButton load= new JButton();
 		load.setToolTipText("Load a file");
 		load.setActionCommand("load");
@@ -70,15 +70,16 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 					File f =fc.getSelectedFile();
 					_ctrl.reset();
 					try  {
-						_ctrl.loadBodies(new FileInputStream(f));
+						_ctrl.loadBodies(new FileInputStream(f)); //carga los cuerpos
 					} catch (FileNotFoundException e) {
 						System.out.println(e.getMessage());
 						//throw exception
 					}
 					
+					
 				}
 				else {
-					//trow exception.
+					throw new Exception("File error.");
 				}
 				
 			}
@@ -128,7 +129,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 				
 				_stopped= false;
 				
-				run_sim()
+				
 				
 				
 				
@@ -224,6 +225,10 @@ private void Actions(ActionEvent e) {
 		}
 		}
 	// SimulatorObserver methods
+	
+	
+	
+	
 	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		
 	}
