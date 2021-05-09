@@ -1,4 +1,4 @@
-package simulator.launcher;
+ package simulator.launcher;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -275,7 +275,7 @@ public class Main {
 		ForceLaws forceLaws = _forceLawsFactory.createInstance(_forceLawsInfo);
 		PhysicsSimulator simulator = new PhysicsSimulator(forceLaws, _dtime);
 		StateComparator cmp = _stateComparatorFactory.createInstance(_stateComparatorInfo);
-		Controller controller = new Controller(simulator, _bodyFactory);
+		Controller controller = new Controller(simulator, _bodyFactory,_forceLawsFactory);
 		
 		try (InputStream is = new FileInputStream(new File(_inFile));) {
 			controller.loadBodies(is);
@@ -296,7 +296,7 @@ public class Main {
 		}
 		
 		
-		controller.run(_steps,os,eos,cmp);
+		controller.run(_steps);
 
 	}
 

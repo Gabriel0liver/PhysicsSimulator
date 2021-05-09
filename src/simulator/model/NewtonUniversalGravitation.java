@@ -62,7 +62,10 @@ public class NewtonUniversalGravitation implements ForceLaws {
 		
 		return direccion.scale(fuerza);
 	}
-
+	
+	public String toString() {
+		return "Newton’s Universal Gravitation with G=- G ";
+	}
 	
 
 }
