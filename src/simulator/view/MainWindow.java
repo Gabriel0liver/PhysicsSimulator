@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
 			
 			
 			
-			StatusBar stBar= StatusBar(_ctrl);
+			StatusBar stBar= new StatusBar(_ctrl);
 			mainPanel.add(stBar,BorderLayout.PAGE_END);
 		}
 		// other private/protected methods
