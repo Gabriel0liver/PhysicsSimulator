@@ -10,7 +10,7 @@ public class MovingTowardsFixedPointBuilder extends Builder<ForceLaws> {
 	
 
 	public MovingTowardsFixedPointBuilder(){
-		this.type = "mtcp";
+		this.type = "mtfp";
 		this.desc = "body moves toward fixed point";
 	}
 	

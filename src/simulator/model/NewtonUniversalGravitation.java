@@ -25,7 +25,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
 				if(j != i) {
 					aux= bs.get(j);
 					f=calcular_fuerza(body,aux);
-					body.addForce(body.getForce().plus(f));
+					body.addForce(f);
 				}
 			}
 			
