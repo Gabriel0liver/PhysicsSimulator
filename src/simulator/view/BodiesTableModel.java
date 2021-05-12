@@ -12,6 +12,10 @@ import simulator.model.SimulatorObserver;
 public class BodiesTableModel extends AbstractTableModel implements SimulatorObserver {
 	// ...
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String[] columnNames= {"Id","Mass","Position","Velocity","Force"};
 	private List<Body> _bodies;
 	
@@ -20,6 +24,7 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
 		_bodies = new ArrayList<>();
 		ctrl.addObserver(this);
 	}
+	
 	@Override
 	public int getRowCount() {
 	// TODO complete
@@ -28,7 +33,7 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
 	@Override
 	public int getColumnCount() {
 		// TODO complete
-		return 5;
+		return columnNames.length;
 	}
 	@Override
 	public String getColumnName(int column) {
@@ -38,6 +43,7 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Body b= _bodies.get(columnIndex);
+		
 		if(columnIndex==0) {
 			return b.getId();
 		}
@@ -54,23 +60,29 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
 			return b.getForce();
 		}
 		else {
+			assert(false);
 			return null;
 		}
 		
 	}
 	
 	// SimulatorObserver methods
-public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
+	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		_bodies=bodies;
+		 fireTableStructureChanged();
+		
 	}
 	public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		_bodies=bodies;
+		 fireTableStructureChanged();
 	}
 	public void onBodyAdded(List<Body> bodies, Body b) {
 		_bodies=bodies;
+		 fireTableStructureChanged();
 	}
 	public void onAdvance(List<Body> bodies, double time) {
 		_bodies=bodies;
+		 fireTableStructureChanged();
 	}
 	public void onDeltaTimeChanged(double dt) {
 		

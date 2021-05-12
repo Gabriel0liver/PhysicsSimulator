@@ -45,6 +45,7 @@ public class MainWindow extends JFrame {
 
 	// this is what we show in the table
 	// esto es lo que mostramos en la table
+	
 	private List<EventEx> _events;
 	private JSpinner _time;
 	private JComboBox<Integer> _priotiry;
