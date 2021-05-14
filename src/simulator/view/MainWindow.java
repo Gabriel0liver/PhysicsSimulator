@@ -18,8 +18,11 @@ public class MainWindow extends JFrame {
 		private void initGUI() {
 			JPanel mainPanel = new JPanel(new BorderLayout());
 			setContentPane(mainPanel);
+			setBounds(200, 200, 700, 600);
+			setVisible(true);
 			
 			// TODO complete this method to build the GUI
+			
 			ControlPanel Cpanel= new ControlPanel(_ctrl);
 			mainPanel.add(Cpanel,BorderLayout.PAGE_START);
 			

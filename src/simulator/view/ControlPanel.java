@@ -3,6 +3,7 @@ package simulator.view;
 import simulator.control.Controller;
 
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -32,29 +33,31 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 	
 	private void initGUI() {
 		// TODO build the tool bar by adding buttons, etc.
+		this.setLayout( new FlowLayout( FlowLayout.LEFT ));
 		JToolBar toolBar= new JToolBar();
+		
 		
 		addLoad(toolBar);
 		toolBar.addSeparator();
 		addFclaws(toolBar);
-		toolBar.addSeparator();
+		/*toolBar.addSeparator();
 		addRun(toolBar);
-		toolBar.addSeparator();
 		addStop(toolBar);
 		toolBar.addSeparator();
 		addExit(toolBar);
 		toolBar.addSeparator();
 		
-		JSpinner steps = new JSpinner();
+		JSpinner steps = new JSpinner(new SpinnerNumberModel(150, 1, 10000, 1));
+		toolBar.add(steps);
 		JTextField  delta_time = new JTextField();
-		
+		toolBar.add(delta_time);*/
 		
 		this.add(toolBar);
 	}
 	
 	
 	//Buttons
-	private void addLoad(JToolBar toolBar) throws Exception {
+	private void addLoad(JToolBar toolBar) {
 		JButton load= new JButton();
 		load.setToolTipText("Load a file");
 		load.setActionCommand("load");
@@ -78,16 +81,13 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 					
 					
 				}
-				else {
-					throw new Exception("File error.");
-				}
 				
 			}
 			
 		};
 		
 		load.addActionListener(al);		//evento
-		load.setIcon(new ImageIcon("icons/open.png"));
+		load.setIcon(new ImageIcon("./resources/icons/open.png"));
 		toolBar.add(load);
 		
 		
@@ -106,7 +106,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		};
 		
 		Fclaws.addActionListener(al);		//evento
-		Fclaws.setIcon(new ImageIcon("icons/physics.png"));
+		Fclaws.setIcon(new ImageIcon("./resources/icons/physics.png"));
 		toolBar.add(Fclaws);
 		
 		
@@ -128,7 +128,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 				}
 				
 				_stopped= false;
-				
 				
 				
 				
@@ -191,15 +190,15 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 	}
 	
 	
-private void Actions(ActionEvent e) {
-	ActionListener al = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
+	private void Actions(ActionEvent e) {
+		ActionListener al = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
 			
-		}
-		
-	};
-}
+		};
+	}
 	// other private/protected methods
 	// ...
 	

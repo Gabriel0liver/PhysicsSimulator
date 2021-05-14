@@ -28,6 +28,7 @@ public class PhysicsSimulator {
 			this.leyesFuerza= l;
 			this.tiempoActual = 0.0;
 			this.cuerpos = new ArrayList<>();
+			this.o = new ArrayList<>();
 		}
 		
 		
@@ -82,7 +83,6 @@ public class PhysicsSimulator {
 		
 		public void reset() {
 			this.tiempoActual=0;
-			this.leyesFuerza= null;
 			
 			for(SimulatorObserver i: this.o) {
 				i.onReset(cuerpos, tiempoActual, dt, this.leyesFuerza.toString());
