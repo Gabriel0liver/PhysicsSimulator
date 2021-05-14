@@ -22,8 +22,12 @@ public class MassEqualStates implements StateComparator{
 			b1= a1.getJSONObject(i);
 			b2= a2.getJSONObject(i);
 			
-			if(b1.getBoolean("id")!=b2.getBoolean("id") || b1.getBoolean("mass")!=b2.getBoolean("mass"))
+			if(!b1.get("id").equals(b2.get("id")) || b1.getDouble("m")!= b2.getDouble("m")) {
+				System.out.println("Id: " + b1.get("id"));
+				System.out.println("Mass " + b1.getDouble("m") + " should be " + b2.getDouble("m"));
 				list=false;
+			}
+			
 			
 			i++;
 		}

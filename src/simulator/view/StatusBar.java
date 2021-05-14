@@ -30,6 +30,10 @@ public class StatusBar extends JPanel implements SimulatorObserver {//hay que ac
 		this.setLayout( new FlowLayout( FlowLayout.LEFT ));
 		this.setBorder( BorderFactory.createBevelBorder( 1 ));
 		
+		_currTime = new JLabel();
+		_currLaws = new JLabel();
+		_numOfBodies = new JLabel();
+		
 		this.add(_currTime);
 		this.add(_numOfBodies);
 		this.add(_currLaws);
@@ -46,6 +50,8 @@ public class StatusBar extends JPanel implements SimulatorObserver {//hay que ac
 	// SimulatorObserver methods
 	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		_currTime.setText("Time:  "+time);
+		_numOfBodies.setText("Bodies:  "+bodies.size());
+		_currLaws.setText("Laws "+fLawsDesc);
 	}
 	public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		
@@ -60,10 +66,9 @@ public class StatusBar extends JPanel implements SimulatorObserver {//hay que ac
 	}
 	public void onAdvance(List<Body> bodies, double time) {
 		_currTime.setText("Time:  "+time);
-		if( n_bodies != bodies.size()) {
+		if(bodies.size() != n_bodies) {
 			n_bodies = bodies.size();
 		}
-		
 	}
 	public void onDeltaTimeChanged(double dt) {
 		

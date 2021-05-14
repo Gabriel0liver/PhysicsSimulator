@@ -45,26 +45,26 @@ public class NewtonUniversalGravitation implements ForceLaws {
 			return force;
 		}
 		
-		Vector2D distancia1 = new Vector2D(b1.getPosition());
-		Vector2D distancia2 = new Vector2D(b2.getPosition());
+		Vector2D p1 = b1.getPosition();
+		Vector2D p2 = b2.getPosition();
 		
-		double absoluto = distancia1.distanceTo(distancia2);
-		if(absoluto == 0.0) {
+		double distancia = p1.distanceTo(p2);
+		if(distancia == 0.0) {
 			fuerza = 0.0;
 		}else {
-			masa= masa * b2.getMass();
-			fuerza = G*(masa/(absoluto*absoluto));
+			masa = masa * b2.getMass();
+			fuerza = G*(masa/(distancia*distancia));
 		}
 		
 
 		
-		direccion = distancia2.minus(distancia1).direction();
+		direccion = p2.minus(p1).direction();
 		
 		return direccion.scale(fuerza);
 	}
 	
 	public String toString() {
-		return "Newton’s Universal Gravitation with G=- G ";
+		return "Newtonï¿½s Universal Gravitation with G=- G ";
 	}
 	
 

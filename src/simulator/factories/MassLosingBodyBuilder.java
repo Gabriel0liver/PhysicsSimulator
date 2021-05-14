@@ -28,7 +28,7 @@ protected MassLosingBody createTheInstance(JSONObject info) {
 		vectores= datos.getJSONArray("p");
 		p= new Vector2D(vectores.getDouble(0),vectores.getDouble(1));
 		
-		MassLosingBody objeto= new MassLosingBody(datos.getString("id"),v,p,datos.getDouble("m"),datos.getDouble("freq"),datos.getDouble("factor"));
+		MassLosingBody objeto= new MassLosingBody(datos.getString("id"),v,p,datos.getDouble("m"),datos.getDouble("factor"),datos.getDouble("freq"));
 		
 		return objeto;
 	}

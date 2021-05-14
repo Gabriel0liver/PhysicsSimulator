@@ -11,13 +11,18 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 		this.g=g;
 		this.c=c;
 	}
+	
 	public void apply(List<Body> bs) {
 		for(int i=0;i<bs.size();i++) {
-		Body b= bs.get(i);
-		Vector2D f = new Vector2D(c.getX()-b.getPosition().getX(),c.getY()-b.getPosition().getX()).scale(g); 
+			Body b= bs.get(i);
+			
+			Vector2D d = new Vector2D(c.minus(b.getPosition()).direction());
+			Vector2D f = new Vector2D(d.scale(b.getMass()*g));
+			
+			b.addForce(f);
 		}
 		
-		}
+	}
 	
 	
 	public String toString() {
