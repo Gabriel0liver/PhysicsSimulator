@@ -1,15 +1,10 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.border.TitledBorder;
 
-import extra.jtable.EventsTableModel;
+
 import simulator.control.Controller;
 
 public class MainWindow extends JFrame {
@@ -42,6 +37,8 @@ public class MainWindow extends JFrame {
 			mainPanel.add(tabla,BorderLayout.NORTH);
 			
 			//viewer
+			Viewer V= new Viewer(_ctrl);
+			mainPanel.add(V,BorderLayout.CENTER);
 			
 			//status bar
 			StatusBar stBar= new StatusBar(_ctrl);

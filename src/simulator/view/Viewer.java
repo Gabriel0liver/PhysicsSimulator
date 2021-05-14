@@ -22,6 +22,8 @@ import simulator.model.Body;
 import simulator.model.SimulatorObserver;
 
 public class Viewer extends JComponent implements SimulatorObserver {
+	
+		private static final long serialVersionUID = 1L;
 	// ...
 		private int _centerX;
 		private int _centerY;
@@ -43,7 +45,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			_scale = 1.0;
 			_showHelp = true;
 			_showVectors = true;
-			addKeyListener(new KeyListener()) {
+			addKeyListener(new KeyListener() {
 				// ...
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -71,6 +73,18 @@ public class Viewer extends JComponent implements SimulatorObserver {
 					default:
 					}
 				}
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
 			});
 			
 			addMouseListener(new MouseListener() {
@@ -79,8 +93,33 @@ public class Viewer extends JComponent implements SimulatorObserver {
 				public void mouseEntered(MouseEvent e) {
 					requestFocus();
 				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
 			});
 		}
+		
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -148,14 +187,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 			}
 			
 		private void drawBody(int row, int col, Graphics2D g) {
-			int x = col * ;
-			int y = row * ;
-			 g.setColor(Color.LIGHT_GRAY);
-			 g.fillRect(x + 2, y + 2, _CELL_WIDTH - 4, _CELL_HEIGHT - 4);
-			 g.setColor(board[row][col]);
-			 g.fillOval(x + 4, y + 4, _CELL_WIDTH - 8, _CELL_HEIGHT - 8);
-			 g.setColor(Color.black);
-			 g.drawOval(x + 4, y + 4, _CELL_WIDTH - 8, _CELL_HEIGHT - 8);
+			
 		}
 		
 		
