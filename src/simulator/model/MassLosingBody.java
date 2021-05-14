@@ -2,6 +2,7 @@ package simulator.model;
 
 
 import simulator.misc.*;
+
 import java.lang.Double;
 
 public class MassLosingBody  extends Body{
@@ -13,7 +14,7 @@ public class MassLosingBody  extends Body{
 	
 
 	public MassLosingBody(String id,Vector2D v,Vector2D p,Double m,Double fac,Double fre) {
-		super(id, v, p,m);
+		super(id, p, v, m);
 		lossFactor= fac;
 		lossFrequency= fre;
 		c= 0.0;
@@ -21,16 +22,15 @@ public class MassLosingBody  extends Body{
 	}
 	
 	public void move(double t) {
-		Double masa = 0.0;
-		
+		Double masa;
 		super.move(t);
 		
 		c+=t;
 		
+		
 		if(c>=this.lossFrequency) {
 			masa=this.getMass()*(1- this.lossFactor);
 			this.setMass(masa); 
-			
 			c= 0.0;
 		}
 		

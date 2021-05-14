@@ -15,14 +15,13 @@ public class MassEqualStatesBuilder extends Builder<StateComparator>{
 	protected StateComparator createTheInstance(JSONObject info) {
 		
 		try {
-		new MassEqualStates();
+		return new MassEqualStates();
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
 		
-		return null;
 	}
 	
 	protected  JSONObject createData() {
