@@ -47,8 +47,13 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		addExit(toolBar);
 		toolBar.addSeparator();
 		
+<<<<<<< HEAD
 		JSpinner steps = new JSpinner(new SpinnerNumberModel(150, 1, 10000, 1));
 		toolBar.add(steps);
+=======
+		JSpinner steps = new JSpinner(new SpinnerNumberModel(10, 1, 10000, 1));
+		steps.setToolTipText("Simulation, insert number of steps: 1-10000");
+>>>>>>> da0859bdd378c28909d4e93bbd3d138d77f57a8d
 		JTextField  delta_time = new JTextField();
 		toolBar.add(delta_time);*/
 		
