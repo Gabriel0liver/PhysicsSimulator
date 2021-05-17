@@ -53,6 +53,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		addFclaws(toolBar);
 		toolBar.addSeparator();
 		addRun(toolBar);
+		toolBar.addSeparator();
 		addStop(toolBar);
 		toolBar.addSeparator();
 		
@@ -64,8 +65,11 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		steps.setToolTipText("Simulation, insert number of steps: 1-10000");
 		time = new JTextField("25000");
 		toolBar.add(stepText);
+		toolBar.addSeparator();
 		toolBar.add(steps);
+		toolBar.addSeparator();
 		toolBar.add(timeText);
+		toolBar.addSeparator();
 		toolBar.add(time);
 		toolBar.addSeparator();
 		addExit(toolBar);

@@ -147,6 +147,7 @@ public class FLDialog extends JDialog{
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		setContentPane(mainPanel);	
 		this.setSize(700,600);
+		
 		JLabel info = new JLabel();
 		info.setHorizontalAlignment(SwingConstants.CENTER);
 		info.setAlignmentX(CENTER_ALIGNMENT);
