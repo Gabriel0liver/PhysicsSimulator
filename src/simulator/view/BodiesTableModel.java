@@ -10,11 +10,7 @@ import simulator.model.Body;
 import simulator.model.SimulatorObserver;
 
 public class BodiesTableModel extends AbstractTableModel implements SimulatorObserver {
-	// ...
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String[] columnNames= {"Id","Mass","Position","Velocity","Force"};
 	private List<Body> _bodies;

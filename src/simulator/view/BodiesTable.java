@@ -22,10 +22,11 @@ public class BodiesTable extends JPanel {
 
 
 	BodiesTable(Controller ctrl) {
-		modelo= new BodiesTableModel(ctrl);
+		
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2),"Bodies",TitledBorder.LEFT, TitledBorder.TOP));
-		setVisible(true);
+		this.setVisible(true);
+		modelo= new BodiesTableModel(ctrl);
 		eventos_tabla= new JTable(modelo);
 		eventos_tabla.setVisible(true);
 		eventos_tabla.setFillsViewportHeight(true);
