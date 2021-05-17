@@ -14,7 +14,6 @@ public class MainWindow extends JFrame {
 		private static final long serialVersionUID = 1L;
 		// ...
 		Controller _ctrl;
-		BodiesTable tabla;
 		
 		
 		public MainWindow(Controller ctrl) {
@@ -36,7 +35,7 @@ public class MainWindow extends JFrame {
 			
 			
 			//Table
-			tabla= new BodiesTable(_ctrl);
+			BodiesTable tabla= new BodiesTable(_ctrl);
 			mainPanel.add(tabla,BorderLayout.NORTH);
 			
 			//viewer
