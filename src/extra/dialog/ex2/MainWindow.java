@@ -53,7 +53,7 @@ public class MainWindow extends JFrame {
 		}
 
 		int status = _dialog.open();
-
+		
 		if (status == 0) {
 			System.out.println("Canceled");
 		} else {

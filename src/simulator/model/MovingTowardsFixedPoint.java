@@ -26,7 +26,7 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 	
 	
 	public String toString() {
-		return "Moving towards -c+\"with constant acceleration -g ";
+		return "Moving towards "+c+" with constant acceleration "+g;
 	}
 	
 	}

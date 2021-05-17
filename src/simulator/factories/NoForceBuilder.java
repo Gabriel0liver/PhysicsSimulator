@@ -22,7 +22,7 @@ public class NoForceBuilder extends Builder<ForceLaws>{
 		
 		
 		
-		objeto.put("type","ng");
+		objeto.put("type","nf");
 		objeto.put("data",datos);
 		objeto.put("desc", "No force");
 		

@@ -198,11 +198,13 @@ class JSONBuilderDialog extends JDialog {
 	}
 
 	public int open() {
+		
 
 		if (getParent() != null)
 			setLocation(//
 					getParent().getLocation().x + getParent().getWidth() / 2 - getWidth() / 2, //
 					getParent().getLocation().y + getParent().getHeight() / 2 - getHeight() / 2);
+		
 		pack();
 		setVisible(true);
 		return _status;
