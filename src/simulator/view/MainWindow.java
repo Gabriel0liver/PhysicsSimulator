@@ -36,12 +36,12 @@ public class MainWindow extends JFrame {
 			
 			
 			//Table
-			tabla= new BodiesTable(_ctrl);
+			/*tabla= new BodiesTable(_ctrl);
 			mainPanel.add(tabla,BorderLayout.NORTH);
 			
 			//viewer
 			Viewer V= new Viewer(_ctrl);
-			mainPanel.add(V,BorderLayout.CENTER);
+			mainPanel.add(V,BorderLayout.CENTER);*/
 			
 			//status bar
 			StatusBar stBar= new StatusBar(_ctrl);

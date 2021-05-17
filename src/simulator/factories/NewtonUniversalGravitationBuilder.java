@@ -34,7 +34,7 @@ public class NewtonUniversalGravitationBuilder extends Builder<ForceLaws>{
 		
 		datos.put("G",  "the gravitational constant (a number)");
 		objeto.put("type", "nlug");
-		objeto.put("desc","Newton’s law of universal gravitation");
+		objeto.put("desc","Newtons law of universal gravitation");
 		objeto.put("data",datos);
 		
 		return objeto;

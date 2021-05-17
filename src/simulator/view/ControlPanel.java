@@ -4,6 +4,8 @@ import simulator.control.Controller;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -23,6 +25,15 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 
 	private Controller _ctrl;
 	private boolean _stopped;
+	private FLDialog _dialog;
+
+	private JButton load;
+	private JButton fclaws;
+	private JButton run;
+	private JButton stop;
+	private JButton exit;
+	private JSpinner steps;
+	private JTextField time;
 	
 	ControlPanel(Controller ctrl) {
 		_ctrl = ctrl;
@@ -44,14 +55,20 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		addRun(toolBar);
 		addStop(toolBar);
 		toolBar.addSeparator();
-		addExit(toolBar);
-		toolBar.addSeparator();
 		
 		
-		JSpinner steps = new JSpinner(new SpinnerNumberModel(10, 1, 10000, 1));
+		JLabel stepText = new JLabel("Steps:");
+		JLabel timeText = new JLabel("Delta-Time:");
+		steps = new JSpinner();
+		steps.setValue(10000);
 		steps.setToolTipText("Simulation, insert number of steps: 1-10000");
-		JTextField  delta_time = new JTextField();
-		toolBar.add(delta_time);
+		time = new JTextField("25000");
+		toolBar.add(stepText);
+		toolBar.add(steps);
+		toolBar.add(timeText);
+		toolBar.add(time);
+		toolBar.addSeparator();
+		addExit(toolBar);
 		
 		this.add(toolBar);
 	}
@@ -59,7 +76,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 	
 	//Buttons
 	private void addLoad(JToolBar toolBar) {
-		JButton load= new JButton();
+		load= new JButton();
 		load.setToolTipText("Load a file");
 		load.setActionCommand("load");
 		
@@ -95,138 +112,125 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 	}
 	
 	private void addFclaws(JToolBar toolBar) {//hay que hacer el evento.
-		JButton Fclaws= new JButton();
-		Fclaws.setToolTipText("Add force laws");
-		Fclaws.setActionCommand("Fclaws");
+		fclaws= new JButton();
+		fclaws.setToolTipText("Add force laws");
+		fclaws.setActionCommand("Fclaws");
+		JPanel that = this;
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (_dialog == null) {
+					_dialog = new FLDialog((Frame) SwingUtilities.getWindowAncestor(that),_ctrl);
+				}
+				_dialog.open();
 				
 			}
 			
 		};
 		
-		Fclaws.addActionListener(al);		//evento
-		Fclaws.setIcon(new ImageIcon("./resources/icons/physics.png"));
-		toolBar.add(Fclaws);
 		
+		fclaws.addActionListener(al);		//evento
+		
+		fclaws.setIcon(new ImageIcon("./resources/icons/physics.png"));
+		toolBar.add(fclaws);
 		
 	}
 	
 	private void addRun(JToolBar toolBar) {
-		JButton run = new JButton();
+		run = new JButton();
 		run.setToolTipText("Run");
 		run.setActionCommand("run");
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				for(int i =0;i<toolBar.getComponentCount();i++) {//desactiva todos los botones. No estoy seguro si funciona.
-					Component j = toolBar.getComponent(i);
-					if(i != 3) {								//no desactiva el boton stop.
-						j.setEnabled(false);
-					}
-				}
-				
+				load.setEnabled(false);
+				fclaws.setEnabled(false);
+				exit.setEnabled(false);
 				_stopped= false;
-				
-				
-				
-				
+				_ctrl.setDeltaTime(Double.parseDouble(time.getText()));
+				run_sim((Integer)steps.getValue());
 			}
 			
 		};
 		run.addActionListener(al);		//evento
-		run.setIcon(new ImageIcon("icons/run.png"));
+		run.setIcon(new ImageIcon("./resources/icons/run.png"));
 		toolBar.add(run);
 		
 		
 	}
 	
 	private void addStop(JToolBar toolBar) {
-		JButton stop= new JButton();
+		stop= new JButton();
 		stop.setToolTipText("Stop");
 		stop.setActionCommand("stop");
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
-				
-				for(int i =0;i<toolBar.getComponentCount();i++) {//activa todos los botones
-					Component j = toolBar.getComponent(i);
-					j.setEnabled(true);
-					
-				}
-				
-				
+				_stopped = true;
 			}
 			
 		};
 		stop.addActionListener(al);		//evento
-		stop.setIcon(new ImageIcon("icons/stop.png"));
+		stop.setIcon(new ImageIcon("./resources/icons/stop.png"));
 		toolBar.add(stop);
 		
 		
 	}
 	
 	private void addExit(JToolBar toolBar) {
-		JButton exit= new JButton();
+		exit= new JButton();
 		exit.setToolTipText("Exit");
 		exit.setActionCommand("exit");
 		
 		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				System.exit(0);
 			}
 			
 		};
 		exit.addActionListener(al);		//evento
-		exit.setIcon(new ImageIcon("icons/exit.png"));
+		exit.setIcon(new ImageIcon("./resources/icons/exit.png"));
 		toolBar.add(exit);
 		
 		
 	}
-	
-	
-	private void Actions(ActionEvent e) {
-		ActionListener al = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-			
-		};
-	}
-	// other private/protected methods
-	// ...
+
 	
 	private void run_sim(int n) {
 		if ( n>0 && !_stopped ) {
 			try {
 				_ctrl.run(1);
-	} catch (Exception e) {
-		// TODO show the error in a dialog box
-		// TODO enable all buttons
-		_stopped = true;
-		return;
-	}
-			SwingUtilities.invokeLater( new Runnable() {
+			}catch (Exception e) {
+				// TODO show the error in a dialog box
+				// TODO enable all buttons
+				load.setEnabled(true);
+				fclaws.setEnabled(true);
+				exit.setEnabled(true);
+				System.out.println(e);
+				_stopped = true;
+				return;
+			}
+			
+			SwingUtilities.invokeLater(new Runnable() {
 				@Override
-	public void run() {
+				public void run() {
 					run_sim(n-1);
 				}
 			});
-		} else {
+			
+		}else{
 			_stopped = true;
+			load.setEnabled(true);
+			fclaws.setEnabled(true);
+			exit.setEnabled(true);
 			// TODO enable all buttons
 		}
-		}
+	}
+	
+	
+	
 	// SimulatorObserver methods
-	
-	
 	
 	
 	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {

@@ -51,7 +51,7 @@ public class PhysicsSimulator {
 			
 			for(SimulatorObserver i: this.o) {
 				
-				i.onAdvance(cuerpos, dt);
+				i.onAdvance(cuerpos, tiempoActual);
 			}
 		}
 		
