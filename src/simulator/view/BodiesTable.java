@@ -22,16 +22,15 @@ public class BodiesTable extends JPanel {
 
 
 	BodiesTable(Controller ctrl) {
-		
+		modelo= new BodiesTableModel(ctrl);
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2),"Bodies",TitledBorder.LEFT, TitledBorder.TOP));
-		
-		
-		modelo= new BodiesTableModel(ctrl);
+		setVisible(true);
 		eventos_tabla= new JTable(modelo);
-		
+		eventos_tabla.setVisible(true);
+		eventos_tabla.setFillsViewportHeight(true);
 		this.add(new JScrollPane(eventos_tabla, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 		
+		
 	}
-	
 }

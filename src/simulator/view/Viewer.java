@@ -33,6 +33,10 @@ public class Viewer extends JComponent implements SimulatorObserver {
 	private List<Body> _bodies;
 	private boolean _showHelp;
 	private boolean _showVectors;
+	private static final Color azul=Color.BLUE;
+	private static final Color rojo= Color.RED;
+	private static final Color verde= Color.GREEN;
+	private static final int radio=5;
 	
 	Viewer(Controller ctrl) {
 		initGUI();
@@ -42,7 +46,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 	private void initGUI() {
 		//  border with title
 		setLayout(new BorderLayout());
-		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2),"Bodies",TitledBorder.LEFT, TitledBorder.TOP));
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2),"Viewer",TitledBorder.LEFT, TitledBorder.TOP));
 		
 		_bodies = new ArrayList<>();
 		_scale = 1.0;
@@ -76,12 +80,48 @@ public class Viewer extends JComponent implements SimulatorObserver {
 				default:
 				}
 	}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		addMouseListener(new MouseListener() {
 			// ...
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				requestFocus();
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 
 			
@@ -102,22 +142,46 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		_centerX = getWidth() / 2;
 		_centerY = getHeight() / 2;
 		// TODO draw a cross at center
-		gr.fillRect(_centerX, _centerY,(int)(_centerX/_scale ),(int)(_centerY/_scale));
-		
+		gr.setColor(rojo);
+		gr.drawLine(_centerX-3, _centerY, _centerX+3, _centerY);
+		gr.drawLine(_centerX, _centerY-3, _centerX, _centerY+3);
 		
 		
 		
 		// TODO draw bodies (with vectors if _showVectors is true)
-		
+		Body b;
+		for(int i =0; i<_bodies.size();i++) {
+			b= _bodies.get(i);
+			drawBodies(gr,b);
+			
+		}
 		
 		
 		// TODO draw help if _showHelp is true
-		JLabel help= new JLabel();
-		help.setLayout(new FlowLayout(FlowLayout.LEFT));
-		
-		
+		String s="h: toggle help, v: toggle vectors, +: zoom in; -: zoom out, =: fit /n";
+		String scaling_ratio= "Scaling ratio: "+_scale;
+		gr.drawString(s+scaling_ratio, _centerX*2, _centerY*2);
 		
 		}
+	
+	private void drawBodies(Graphics g,Body b) {
+		int x,y;
+		x= (int) b.getPosition().getX();
+		y=(int)  b.getPosition().getY();
+		
+		if(_showVectors==true) { //if you want to draw force/velocity, I'm not sure with the colors.
+			
+			drawLineWithArrow(g,x,y,(int) b.getForce().getX(),(int) b.getForce().getY(),radio,1,rojo,rojo);	
+			drawLineWithArrow(g,x,y,(int) b.getVelocity().getX(),(int) b.getVelocity().getY(),radio,1,verde,verde);
+			
+		}
+		
+		g.setColor(azul);
+		g.drawOval(x-radio, y+radio, radio*2, radio*2);	//draw body
+		
+		
+		
+	}
 	
 	
 	// other private/protected methods
@@ -163,21 +227,27 @@ public class Viewer extends JComponent implements SimulatorObserver {
 	
 	
 	
+	
 		// SimulatorObserver methods
 		// ...
 	public void onRegister(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		_bodies=bodies;
+		autoScale();
+		repaint();
 	}
 	public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
-		
 		_bodies=bodies;
-		
+		autoScale();
+		repaint();
 	}
 	public void onBodyAdded(List<Body> bodies, Body b) {
 		_bodies=bodies;
+		autoScale();
+		repaint();
 	}
 	public void onAdvance(List<Body> bodies, double time) {
 		_bodies=bodies;
+		repaint();
 	}
 	public void onDeltaTimeChanged(double dt) {
 		
