@@ -162,26 +162,30 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		
 		
 		// TODO draw help if _showHelp is true
-		String s="h: toggle help, v: toggle vectors, +: zoom in; -: zoom out, =: fit /n";
-		String scaling_ratio= "Scaling ratio: "+_scale;
-		gr.drawString(s+scaling_ratio, _centerX*2, _centerY*2);
+		if(_showHelp) {
+			g.setColor(rojo);
+			String s="h: toggle help, v: toggle vectors, +: zoom in; -: zoom out, =: fit /n";
+			String scaling_ratio= "Scaling ratio: "+_scale;
+			gr.drawString(s,10,27);
+			gr.drawString(scaling_ratio,10,45);
+		}
 		
 		}
 	
 	private void drawBodies(Graphics g,Body b) {
-		int x,y;
-		x= (int) b.getPosition().getX();
-		y=(int)  b.getPosition().getY();
+		double x,y;
+		x= b.getPosition().getX();
+		y= b.getPosition().getY();
 		
 		if(_showVectors==true) { //if you want to draw force/velocity, I'm not sure with the colors.
 			
-			drawLineWithArrow(g,x,y,(int) b.getForce().getX(),(int) b.getForce().getY(),radio,1,rojo,rojo);	
-			drawLineWithArrow(g,x,y,(int) b.getVelocity().getX(),(int) b.getVelocity().getY(),radio,1,verde,verde);
+			drawLineWithArrow(g,_centerX +(int)(x/_scale),_centerY+(int)(y/_scale),(int) b.getForce().direction().scale(10).getX(),(int) b.getForce().direction().scale(10).getY(),3,3,rojo,rojo);	
+			drawLineWithArrow(g,_centerX +(int)(x/_scale),_centerY+(int)(y/_scale),(int) b.getVelocity().direction().scale(10).getX(),(int) b.getVelocity().direction().scale(10).getY(),3,3,verde,verde);
 			
 		}
 		
 		g.setColor(azul);
-		g.drawOval(x-radio, y+radio, radio*2, radio*2);	//draw body
+		g.fillOval(_centerX + (int)(x/_scale), _centerY - (int) (y/_scale),10,10);
 		
 		
 		
