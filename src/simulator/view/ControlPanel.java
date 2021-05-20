@@ -1,4 +1,4 @@
-package simulator.view;
+ package simulator.view;
 
 import simulator.control.Controller;
 
@@ -76,7 +76,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		toolBar.addSeparator();
 		addExit(toolBar);
 		toolBar.addSeparator();
-		addReset(toolBar);
 		
 		this.add(toolBar);
 	}
@@ -205,22 +204,6 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		
 	}
 
-	private void addReset(JToolBar toolBar){
-		reset=new JButton("Reset");
-		reset.setActionCommand("Reset");
-		
-		ActionListener al = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_ctrl.reset();
-			}
-			
-		};
-		
-		reset.addActionListener(al);
-		toolBar.add(reset);
-		
-	}
 	private void run_sim(int n) {
 		if ( n>0 && !_stopped ) {
 			try {
