@@ -199,6 +199,10 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		g.setColor(azul);
 
 		g.fillOval(_centerX + (int)(x/_scale)-5, _centerY - (int) (y/_scale)-5,10,10);
+
+		g.setColor(Color.black);
+		g.drawString(b.getId(),_centerX + (int)(x/_scale)-6 , _centerY - (int) (y/_scale)-10);
+
 		
 		
 		

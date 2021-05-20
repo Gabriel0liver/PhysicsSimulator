@@ -96,7 +96,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 				
 				if (x == JFileChooser.APPROVE_OPTION) {
 					File f =fc.getSelectedFile();
-					_ctrl.erase_simulator();
+					_ctrl.reset();
 					try  {
 						_ctrl.loadBodies(new FileInputStream(f)); //carga los cuerpos
 					} catch (FileNotFoundException e) {
@@ -153,7 +153,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 				load.setEnabled(false);
 				fclaws.setEnabled(false);
 				exit.setEnabled(false);
-				//reset.setEnabled(false);
+				
 				_stopped= false;
 				_ctrl.setDeltaTime(Double.parseDouble(time.getText()));
 				run_sim((Integer)steps.getValue());
@@ -203,6 +203,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		
 		
 	}
+
 
 	private void run_sim(int n) {
 		if ( n>0 && !_stopped ) {

@@ -83,6 +83,7 @@ public class PhysicsSimulator {
 		
 		public void reset() {
 			this.tiempoActual=0;
+			cuerpos.removeAll(cuerpos);
 			
 			for(SimulatorObserver i: this.o) {
 				i.onReset(cuerpos, tiempoActual, dt, this.leyesFuerza.toString());
@@ -110,12 +111,6 @@ public class PhysicsSimulator {
 			}
 		}
 		
-		
-		
-		public void erase_simulator() {
-			tiempoActual=0;
-			cuerpos.removeAll(cuerpos);
-		}
 		
 		
 		public JSONObject getState() {
