@@ -42,9 +42,7 @@ public class Controller {
 	public void reset() {
 		this.simulator.reset();
 	}
-	public void erase_simulator() {
-		this.simulator.erase_simulator();
-	}
+	
 	
 	public void setDeltaTime(double dt) {
 	this.simulator.setDeltaTime(dt);

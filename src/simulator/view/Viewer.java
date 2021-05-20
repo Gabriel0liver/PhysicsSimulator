@@ -186,19 +186,20 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		
 		if(_showVectors==true) { //if you want to draw force/velocity, I'm not sure with the colors.
 			
-			int x2 = _centerX+(int) b.getForce().direction().scale(10).getX();
-			int y2= _centerY+ (int) b.getForce().direction().scale(10).getY();
-			drawLineWithArrow(g,_centerX +(int)(x/_scale),_centerY+(int)(y/_scale),x2,y2,3,3,rojo,rojo);	
-			
-			x2 = _centerX+(int) b.getVelocity().direction().scale(10).getX();
-			y2= _centerY+ (int) b.getVelocity().direction().scale(10).getY();
-			drawLineWithArrow(g,_centerX +(int)(x/_scale),_centerY+(int)(y/_scale),x2,y2,3,3,verde,verde);
-			
+			int x2 = (int) ( _centerX + (int)(x/_scale) + (b.getForce().direction().scale(20).getX()));
+            int y2= (int) ( _centerY - (int) (y/_scale) - (b.getForce().direction().scale(20).getY()));
+            drawLineWithArrow(g,_centerX +(int)(x/_scale),_centerY-(int)(y/_scale),x2,y2,3,3,rojo,rojo);    
+            
+            x2 = (int) ( _centerX + (int)(x/_scale) + (b.getVelocity().direction().scale(20).getX()));
+            y2= (int) ( _centerY - (int) (y/_scale) - (b.getVelocity().direction().scale(20).getY()));
+            drawLineWithArrow(g,_centerX +(int)(x/_scale),_centerY-(int)(y/_scale),x2,y2,3,3,verde,verde);
 		}
 		
 		g.setColor(azul);
 
-		g.fillOval(_centerX + (int)(x/_scale), _centerY - (int) (y/_scale),10,10);
+		g.fillOval(_centerX + (int)(x/_scale)-5, _centerY - (int) (y/_scale)-5,10,10);
+		g.setColor(Color.black);
+		g.drawString(b.getId(),_centerX + (int)(x/_scale)-6 , _centerY - (int) (y/_scale)-10);
 		
 		
 		
