@@ -111,6 +111,13 @@ public class PhysicsSimulator {
 		}
 		
 		
+		
+		public void erase_simulator() {
+			tiempoActual=0;
+			cuerpos.removeAll(cuerpos);
+		}
+		
+		
 		public JSONObject getState() {
 			JSONObject state= new JSONObject();
 			JSONArray bodies= new JSONArray();
