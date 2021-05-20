@@ -2,6 +2,7 @@ package simulator.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,9 +13,9 @@ import javax.swing.border.TitledBorder;
 import simulator.control.Controller;
 
 public class BodiesTable extends JPanel {
-	/**
-	 * 
-	 */
+	
+	
+	
 	private static final long serialVersionUID = 1L;
 	
 	private BodiesTableModel modelo;
@@ -31,6 +32,7 @@ public class BodiesTable extends JPanel {
 		eventos_tabla.setVisible(true);
 		eventos_tabla.setFillsViewportHeight(true);
 		this.add(new JScrollPane(eventos_tabla, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
+
 		
 		
 	}

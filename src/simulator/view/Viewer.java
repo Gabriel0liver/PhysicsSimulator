@@ -26,6 +26,10 @@ import simulator.model.Body;
 import simulator.model.SimulatorObserver;
 
 public class Viewer extends JComponent implements SimulatorObserver {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// ...
 	private int _centerX;
 	private int _centerY;
@@ -51,8 +55,8 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		_bodies = new ArrayList<>();
 		_scale = 1.0;
 		_showHelp = true;
-		_showVectors = true;
-		addKeyListener(new KeyListener() {
+		_showVectors = false;
+		this.addKeyListener(new KeyListener() {
 			// ...
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -93,7 +97,7 @@ public class Viewer extends JComponent implements SimulatorObserver {
 				
 			}
 		});
-		addMouseListener(new MouseListener() {
+		this.addMouseListener(new MouseListener() {
 			// ...
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -126,6 +130,10 @@ public class Viewer extends JComponent implements SimulatorObserver {
 
 			
 		});
+		
+		
+		
+		
 		}
 	
 	
@@ -134,7 +142,9 @@ public class Viewer extends JComponent implements SimulatorObserver {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		// use ’gr’ to draw not ’g’ --- it gives nicer results
+		// use gr to draw not g --- it gives nicer results
+		
+		
 		Graphics2D gr = (Graphics2D) g;
 		gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -158,9 +168,10 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		
 		
 		// TODO draw help if _showHelp is true
-		String s="h: toggle help, v: toggle vectors, +: zoom in; -: zoom out, =: fit /n";
+		gr.setColor(rojo);
+		String s="h: toggle help, v: toggle vectors, +: zoom in; -: zoom out, =: fit ";
 		String scaling_ratio= "Scaling ratio: "+_scale;
-		gr.drawString(s+scaling_ratio, _centerX*2, _centerY*2);
+		gr.drawString(s+scaling_ratio, 20, 30);
 		
 		}
 	
@@ -177,7 +188,8 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		}
 		
 		g.setColor(azul);
-		g.drawOval(x-radio, y+radio, radio*2, radio*2);	//draw body
+		g.fillOval(_centerX + (int) (x/_scale), _centerY - (int) (y/_scale), radio*2, radio*2);	//draw body
+		
 		
 		
 		
@@ -234,16 +246,19 @@ public class Viewer extends JComponent implements SimulatorObserver {
 		_bodies=bodies;
 		autoScale();
 		repaint();
+		
 	}
 	public void onReset(List<Body> bodies, double time, double dt, String fLawsDesc) {
 		_bodies=bodies;
 		autoScale();
 		repaint();
+		
 	}
 	public void onBodyAdded(List<Body> bodies, Body b) {
 		_bodies=bodies;
 		autoScale();
 		repaint();
+		
 	}
 	public void onAdvance(List<Body> bodies, double time) {
 		_bodies=bodies;

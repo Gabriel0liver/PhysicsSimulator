@@ -38,7 +38,7 @@ public class BodiesTableModel extends AbstractTableModel implements SimulatorObs
 	}
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Body b= _bodies.get(columnIndex);
+		Body b= _bodies.get(rowIndex);
 		
 		if(columnIndex==0) {
 			return b.getId();
