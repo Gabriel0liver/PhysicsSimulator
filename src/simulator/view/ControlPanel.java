@@ -1,4 +1,4 @@
-package simulator.view;
+spackage simulator.view;
 
 import simulator.control.Controller;
 
