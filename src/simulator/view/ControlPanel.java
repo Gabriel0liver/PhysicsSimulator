@@ -65,7 +65,7 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 		steps = new JSpinner();
 		steps.setValue(10000);
 		steps.setToolTipText("Simulation, insert number of steps: 1-10000");
-		time = new JTextField("25000");
+		time = new JTextField("2500.0");
 		toolBar.add(stepText);
 		toolBar.addSeparator();
 		toolBar.add(steps);
@@ -155,8 +155,13 @@ public class ControlPanel extends JPanel implements SimulatorObserver{//page 7
 				exit.setEnabled(false);
 				
 				_stopped= false;
-				_ctrl.setDeltaTime(Double.parseDouble(time.getText()));
-				run_sim((Integer)steps.getValue());
+				try {
+					_ctrl.setDeltaTime(Double.parseDouble(time.getText()));
+					run_sim((Integer)steps.getValue());
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(toolBar,"Delta-time format is incorrect","Error",JOptionPane.WARNING_MESSAGE);
+				}
+				
 			}
 			
 		};

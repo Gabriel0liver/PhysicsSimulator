@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -123,7 +124,7 @@ public class FLDialog extends JDialog{
 			
 			for(int i = 0; i < _data.length; i++) {
 				Object value = getValueAt(i,1);
-				if(value != null && value != "") {
+				if(value != null && !value.equals("")) {
 					String key = getValueAt(i,0).toString();
 					if(key.equals("c")) {
 						JSONArray vector = new JSONArray(value.toString());
@@ -247,7 +248,7 @@ public class FLDialog extends JDialog{
 					_status = 1;
 					FLDialog.this.setVisible(false);
 				}catch(Exception e){
-					System.out.println(e);
+					JOptionPane.showMessageDialog(buttonsPanel,"Value format is incorrect","Error",JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}
